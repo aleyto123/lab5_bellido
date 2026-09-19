@@ -21,17 +21,16 @@ class NotificationService {
 
     const saved = this.notificationRepository.save(notification);
 
-    // Si la notificacion es de tipo "email", se envia un correo real
-    if (type === "email") {
-      try {
-        await this.emailService.sendEmail({
-          to: "rony.bellido@tecsup.edu.pe",
-          subject: "API RESTful - Alertas del sistema de Tickets",
-          htmlBody: `<p>${message}</p>`,
-        });
-      } catch (error) {
-        console.error("Error al enviar el correo:", error.message);
-      }
+    // Se envia el correo SIEMPRE, sin importar el tipo de notificacion
+    try {
+      await this.emailService.sendEmail({
+        to: process.env.MAILER_EMAIL,
+        subject: `Alerta del Sistema de Tickets: ${message}`,
+        htmlBody: `<p>Se ha generado una nueva notificación:</p><h3>${message}</h3><p>Ticket ID: ${ticketId}</p>`,
+      });
+      console.log(`Correo enviado con éxito a ${process.env.MAILER_EMAIL}: ${message}`);
+    } catch (error) {
+      console.error(`Error al enviar el correo (${error.code || "auth"}): ${error.message}`);
     }
 
     return saved;
