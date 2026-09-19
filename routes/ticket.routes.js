@@ -9,6 +9,9 @@ router.post("/", ticketController.create);
 // GET /tickets
 router.get("/", ticketController.list);
 
+// GET /tickets/:id/notifications
+router.get("/:id/notifications", ticketController.listNotifications);
+
 // PUT /tickets/:id/assign
 router.put("/:id/assign", ticketController.assign);
 

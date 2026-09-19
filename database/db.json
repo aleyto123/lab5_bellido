@@ -1,4 +1,125 @@
 {
-  "tickets": [],
-  "notifications": []
+  "tickets": [
+    {
+      "id": "5a6559a2-08f7-4d2c-ab82-d3a4fd4441f1",
+      "title": "Error 500 en el login",
+      "description": "Los usuarios no pueden iniciar sesion desde ayer",
+      "priority": "alta",
+      "status": "abierto",
+      "assignedTo": null,
+      "createdAt": "2026-09-19T14:56:00.446Z",
+      "updatedAt": "2026-09-19T14:56:00.449Z"
+    },
+    {
+      "id": "dfd9e4b1-a906-4f02-a668-74b09f19c4ed",
+      "title": "Error 500 en el login",
+      "description": "Los usuarios no pueden iniciar la sesion debido a problemas con el servidor",
+      "priority": "alta",
+      "status": "abierto",
+      "assignedTo": null,
+      "createdAt": "2026-09-19T14:56:38.735Z",
+      "updatedAt": "2026-09-19T14:56:38.735Z"
+    },
+    {
+      "id": "981d6052-7970-4935-9297-86310c6a09b3",
+      "title": "Prueba final",
+      "description": "Verificaci�n del arreglo",
+      "priority": "alta",
+      "status": "abierto",
+      "assignedTo": null,
+      "createdAt": "2026-09-19T15:08:51.627Z",
+      "updatedAt": "2026-09-19T15:08:51.627Z"
+    },
+    {
+      "id": "65bf2c00-7def-4b46-b408-6912ba76ef6b",
+      "title": "Prueba final",
+      "description": "Verificación del arreglo",
+      "priority": "alta",
+      "status": "abierto",
+      "assignedTo": null,
+      "createdAt": "2026-09-19T15:09:03.184Z",
+      "updatedAt": "2026-09-19T15:09:03.185Z"
+    },
+    {
+      "id": "7ebbb793-880c-4c7f-ab99-119a9092f8f9",
+      "title": "Prueba final",
+      "description": "Verificación del arreglo",
+      "priority": "alta",
+      "status": "abierto",
+      "assignedTo": null,
+      "createdAt": "2026-09-19T15:10:06.473Z",
+      "updatedAt": "2026-09-19T15:10:06.474Z"
+    },
+    {
+      "id": "557fb577-fac5-4e70-a3e5-c0a8ef6c13fd",
+      "title": "Error 500 en el login",
+      "description": "Los usuarios no pueden iniciar la sesion debido a problemas",
+      "priority": "alta",
+      "status": "abierto",
+      "assignedTo": null,
+      "createdAt": "2026-09-19T15:10:25.819Z",
+      "updatedAt": "2026-09-19T15:10:25.820Z"
+    },
+    {
+      "id": "28e6c769-0b15-461f-bfd7-d21ccaf702b9",
+      "title": "Error 500 en el login",
+      "description": "Los usuarios no pueden iniciar sesión",
+      "priority": "alta",
+      "status": "abierto",
+      "assignedTo": null,
+      "createdAt": "2026-09-19T15:20:15.572Z",
+      "updatedAt": "2026-09-19T15:20:15.575Z"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "40478853-c631-41d2-80d6-dad3d168d319",
+      "ticketId": "5a6559a2-08f7-4d2c-ab82-d3a4fd4441f1",
+      "message": "Ticket \"Error 500 en el login\" creado.",
+      "type": "created",
+      "createdAt": "2026-09-19T14:56:00.451Z"
+    },
+    {
+      "id": "10d57342-4e92-4561-a42b-816084865a71",
+      "ticketId": "dfd9e4b1-a906-4f02-a668-74b09f19c4ed",
+      "message": "Ticket \"Error 500 en el login\" creado.",
+      "type": "created",
+      "createdAt": "2026-09-19T14:56:38.737Z"
+    },
+    {
+      "id": "12ab110d-c0f4-4c45-81dd-4fd719dde16a",
+      "ticketId": "981d6052-7970-4935-9297-86310c6a09b3",
+      "message": "Ticket \"Prueba final\" creado.",
+      "type": "created",
+      "createdAt": "2026-09-19T15:08:51.628Z"
+    },
+    {
+      "id": "f34ef9a1-dd75-4eb7-8d52-ac60255d7ce4",
+      "ticketId": "65bf2c00-7def-4b46-b408-6912ba76ef6b",
+      "message": "Ticket \"Prueba final\" creado.",
+      "type": "created",
+      "createdAt": "2026-09-19T15:09:03.186Z"
+    },
+    {
+      "id": "d88a4cf4-9537-48ff-8fc4-558ee34fa1e4",
+      "ticketId": "7ebbb793-880c-4c7f-ab99-119a9092f8f9",
+      "message": "Ticket \"Prueba final\" creado.",
+      "type": "created",
+      "createdAt": "2026-09-19T15:10:06.474Z"
+    },
+    {
+      "id": "08b7127d-a8f9-4010-8065-97061bcd3ebd",
+      "ticketId": "557fb577-fac5-4e70-a3e5-c0a8ef6c13fd",
+      "message": "Ticket \"Error 500 en el login\" creado.",
+      "type": "created",
+      "createdAt": "2026-09-19T15:10:25.821Z"
+    },
+    {
+      "id": "e3529b77-df11-4ecf-aa1c-63e7df1fd473",
+      "ticketId": "28e6c769-0b15-461f-bfd7-d21ccaf702b9",
+      "message": "Ticket \"Error 500 en el login\" creado.",
+      "type": "created",
+      "createdAt": "2026-09-19T15:20:15.579Z"
+    }
+  ]
 }

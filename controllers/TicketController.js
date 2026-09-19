@@ -1,7 +1,9 @@
 ﻿// controllers/TicketController.js
 const TicketService = require("../services/TicketService");
+const NotificationService = require("../services/NotificationService");
 
 const ticketService = new TicketService();
+const notificationService = new NotificationService();
 
 // POST /tickets
 const create = async (req, res) => {
@@ -26,7 +28,33 @@ const create = async (req, res) => {
 const list = (req, res) => {
   try {
     const tickets = ticketService.list();
+    const page = Number(req.query.page) > 0 ? Number(req.query.page) : 1;
+    const limit = Number(req.query.limit) > 0 ? Number(req.query.limit) : tickets.length || 10;
+
+    if (req.query.page || req.query.limit) {
+      const start = (page - 1) * limit;
+      const data = tickets.slice(start, start + limit);
+      return res.json({
+        page,
+        limit,
+        total: tickets.length,
+        totalPages: Math.ceil(tickets.length / limit),
+        data,
+      });
+    }
+
     res.json(tickets);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// GET /tickets/:id/notifications
+const listNotifications = (req, res) => {
+  try {
+    const { id } = req.params;
+    const notifications = notificationService.listByTicketId(id);
+    res.json(notifications);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -87,6 +115,7 @@ const remove = async (req, res) => {
 module.exports = {
   create,
   list,
+  listNotifications,
   assign,
   changeStatus,
   delete: remove,

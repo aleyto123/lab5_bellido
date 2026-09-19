@@ -10,7 +10,7 @@ class NotificationService {
   }
 
   // Crea una nueva notificacion con UUID
-  async create({ ticketId, message, type = "info" }) {
+  async create({ ticketId, message, type = "info", to = process.env.MAILER_TO || process.env.MAILER_EMAIL }) {
     const notification = {
       id: uuidv4(),
       ticketId,
@@ -21,26 +21,12 @@ class NotificationService {
 
     const saved = this.notificationRepository.save(notification);
 
-    // Se envia el correo SIEMPRE, pero protegido: si falla, la API NO se cae.
-    try {
-      const result = await this.emailService.sendEmail({
-        to: process.env.MAILER_EMAIL,
-        subject: `Alerta del Sistema de Tickets: ${message}`,
-        htmlBody: `<p>Se ha generado una nueva notificación:</p><h3>${message}</h3><p>Ticket ID: ${ticketId}</p>`,
-      });
-
-      if (result && result.success) {
-        console.log("Correo enviado exitosamente");
-      } else {
-        console.error(
-          "No se pudo enviar el correo:",
-          result ? result.error : "respuesta vacía"
-        );
-      }
-    } catch (error) {
-      // Red de seguridad extra: nunca debe propagarse y tumbar la API
-      console.error("No se pudo enviar el correo:", error.message);
-    }
+    // Se envia el correo en segundo plano para no bloquear la respuesta HTTP.
+    void this.emailService.sendEmail({
+      to,
+      subject: `Alerta del Sistema de Tickets: ${message}`,
+      htmlBody: `<p>Se ha generado una nueva notificación:</p><h3>${message}</h3><p>Ticket ID: ${ticketId}</p>`,
+    });
 
     return saved;
   }
@@ -48,6 +34,13 @@ class NotificationService {
   // Lista todas las notificaciones
   list() {
     return this.notificationRepository.findAll();
+  }
+
+  // Lista las notificaciones relacionadas a un ticket
+  listByTicketId(ticketId) {
+    return this.notificationRepository
+      .findAll()
+      .filter((notification) => notification.ticketId === ticketId);
   }
 }
 

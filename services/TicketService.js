@@ -24,7 +24,7 @@ class TicketService {
 
     const created = this.ticketRepository.save(ticket);
 
-    await this.notificationService.create({
+    this.notificationService.create({
       ticketId: created.id,
       message: `Ticket "${created.title}" creado.`,
       type: "created",
@@ -42,7 +42,7 @@ class TicketService {
 
     if (!updated) return null;
 
-    await this.notificationService.create({
+    this.notificationService.create({
       ticketId: id,
       message: `Ticket "${updated.title}" asignado a ${assignedTo}.`,
       type: "assigned",
@@ -60,7 +60,7 @@ class TicketService {
 
     if (!updated) return null;
 
-    await this.notificationService.create({
+    this.notificationService.create({
       ticketId: id,
       message: `Ticket "${updated.title}" cambio de estado a "${status}".`,
       type: "status_changed",
@@ -80,7 +80,7 @@ class TicketService {
 
     if (!deleted) return null;
 
-    await this.notificationService.create({
+    this.notificationService.create({
       ticketId: deleted.id,
       message: `Ticket "${deleted.title}" eliminado.`,
       type: "deleted",
