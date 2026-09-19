@@ -21,16 +21,25 @@ class NotificationService {
 
     const saved = this.notificationRepository.save(notification);
 
-    // Se envia el correo SIEMPRE, sin importar el tipo de notificacion
+    // Se envia el correo SIEMPRE, pero protegido: si falla, la API NO se cae.
     try {
-      await this.emailService.sendEmail({
+      const result = await this.emailService.sendEmail({
         to: process.env.MAILER_EMAIL,
         subject: `Alerta del Sistema de Tickets: ${message}`,
         htmlBody: `<p>Se ha generado una nueva notificación:</p><h3>${message}</h3><p>Ticket ID: ${ticketId}</p>`,
       });
-      console.log(`Correo enviado con éxito a ${process.env.MAILER_EMAIL}: ${message}`);
+
+      if (result && result.success) {
+        console.log("Correo enviado exitosamente");
+      } else {
+        console.error(
+          "No se pudo enviar el correo:",
+          result ? result.error : "respuesta vacía"
+        );
+      }
     } catch (error) {
-      console.error(`Error al enviar el correo (${error.code || "auth"}): ${error.message}`);
+      // Red de seguridad extra: nunca debe propagarse y tumbar la API
+      console.error("No se pudo enviar el correo:", error.message);
     }
 
     return saved;
