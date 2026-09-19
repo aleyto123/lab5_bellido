@@ -1,3 +1,8 @@
+﻿// controllers/TicketController.js
+const TicketService = require("../services/TicketService");
+
+const ticketService = new TicketService();
+
 // POST /tickets
 const create = async (req, res) => {
   try {
@@ -77,4 +82,12 @@ const remove = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+};
+
+module.exports = {
+  create,
+  list,
+  assign,
+  changeStatus,
+  delete: remove,
 };

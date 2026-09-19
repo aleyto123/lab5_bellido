@@ -21,3 +21,9 @@ app.get("/", (req, res) => {
 // Rutas
 app.use("/tickets", ticketRoutes);
 app.use("/notifications", notificationRoutes);
+
+// Levantar el servidor
+app.listen(PORT, () => {
+  console.log(`Servidor escuchando en http://localhost:${PORT}`);
+});
+
