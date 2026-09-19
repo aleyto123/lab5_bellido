@@ -1,16 +1,11 @@
-// controllers/TicketController.js
-const TicketService = require("../services/TicketService");
-
-const ticketService = new TicketService();
-
 // POST /tickets
-const create = (req, res) => {
+const create = async (req, res) => {
   try {
     const { title, description, priority, assignedTo } = req.body;
     if (!title) {
       return res.status(400).json({ error: "El campo 'title' es obligatorio." });
     }
-    const ticket = ticketService.createTicket({
+    const ticket = await ticketService.createTicket({
       title,
       description,
       priority,
@@ -33,7 +28,7 @@ const list = (req, res) => {
 };
 
 // PUT /tickets/:id/assign
-const assign = (req, res) => {
+const assign = async (req, res) => {
   try {
     const { id } = req.params;
     const { assignedTo } = req.body;
@@ -42,7 +37,7 @@ const assign = (req, res) => {
         .status(400)
         .json({ error: "El campo 'assignedTo' es obligatorio." });
     }
-    const ticket = ticketService.assignTicket(id, assignedTo);
+    const ticket = await ticketService.assignTicket(id, assignedTo);
     if (!ticket) {
       return res.status(404).json({ error: "Ticket no encontrado." });
     }
@@ -53,14 +48,14 @@ const assign = (req, res) => {
 };
 
 // PUT /tickets/:id/status
-const changeStatus = (req, res) => {
+const changeStatus = async (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
     if (!status) {
       return res.status(400).json({ error: "El campo 'status' es obligatorio." });
     }
-    const ticket = ticketService.changeStatus(id, status);
+    const ticket = await ticketService.changeStatus(id, status);
     if (!ticket) {
       return res.status(404).json({ error: "Ticket no encontrado." });
     }
@@ -71,10 +66,10 @@ const changeStatus = (req, res) => {
 };
 
 // DELETE /tickets/:id
-const remove = (req, res) => {
+const remove = async (req, res) => {
   try {
     const { id } = req.params;
-    const ticket = ticketService.deleteTicket(id);
+    const ticket = await ticketService.deleteTicket(id);
     if (!ticket) {
       return res.status(404).json({ error: "Ticket no encontrado." });
     }
@@ -82,12 +77,4 @@ const remove = (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-};
-
-module.exports = {
-  create,
-  list,
-  assign,
-  changeStatus,
-  delete: remove,
 };

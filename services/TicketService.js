@@ -1,4 +1,4 @@
-// services/TicketService.js
+﻿// services/TicketService.js
 const { v4: uuidv4 } = require("uuid");
 const TicketRepository = require("../repositories/TicketRepository");
 const NotificationService = require("./NotificationService");
@@ -9,8 +9,8 @@ class TicketService {
     this.notificationService = new NotificationService();
   }
 
-  // Crea un nuevo ticket y genera una notificación
-  createTicket({ title, description, priority = "media", assignedTo = null }) {
+  // Crea un nuevo ticket y genera una notificacion
+  async createTicket({ title, description, priority = "media", assignedTo = null }) {
     const ticket = {
       id: uuidv4(),
       title,
@@ -24,7 +24,7 @@ class TicketService {
 
     const created = this.ticketRepository.save(ticket);
 
-    this.notificationService.create({
+    await this.notificationService.create({
       ticketId: created.id,
       message: `Ticket "${created.title}" creado.`,
       type: "created",
@@ -33,8 +33,8 @@ class TicketService {
     return created;
   }
 
-  // Asigna un ticket a un responsable y genera una notificación
-  assignTicket(id, assignedTo) {
+  // Asigna un ticket a un responsable y genera una notificacion
+  async assignTicket(id, assignedTo) {
     const updated = this.ticketRepository.update(id, {
       assignedTo,
       updatedAt: new Date().toISOString(),
@@ -42,7 +42,7 @@ class TicketService {
 
     if (!updated) return null;
 
-    this.notificationService.create({
+    await this.notificationService.create({
       ticketId: id,
       message: `Ticket "${updated.title}" asignado a ${assignedTo}.`,
       type: "assigned",
@@ -51,8 +51,8 @@ class TicketService {
     return updated;
   }
 
-  // Cambia el estado de un ticket y genera una notificación
-  changeStatus(id, status) {
+  // Cambia el estado de un ticket y genera una notificacion
+  async changeStatus(id, status) {
     const updated = this.ticketRepository.update(id, {
       status,
       updatedAt: new Date().toISOString(),
@@ -60,9 +60,9 @@ class TicketService {
 
     if (!updated) return null;
 
-    this.notificationService.create({
+    await this.notificationService.create({
       ticketId: id,
-      message: `Ticket "${updated.title}" cambió de estado a "${status}".`,
+      message: `Ticket "${updated.title}" cambio de estado a "${status}".`,
       type: "status_changed",
     });
 
@@ -74,13 +74,13 @@ class TicketService {
     return this.ticketRepository.findAll();
   }
 
-  // Elimina un ticket y genera una notificación
-  deleteTicket(id) {
+  // Elimina un ticket y genera una notificacion
+  async deleteTicket(id) {
     const deleted = this.ticketRepository.delete(id);
 
     if (!deleted) return null;
 
-    this.notificationService.create({
+    await this.notificationService.create({
       ticketId: deleted.id,
       message: `Ticket "${deleted.title}" eliminado.`,
       type: "deleted",
